@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!-- This is built from a template for a generic Internet Draft. Suggestions for
+     improvement welcome - write to Brian Carpenter, brian.e.carpenter @ gmail.com -->
+<!-- This can be converted using the Web service at http://xml.resource.org/experimental.html
+     (which supports the latest, sometimes undocumented and under-tested, features.) -->
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?rfc toc="yes"?>
+<!-- You want a table of contents -->
+<?rfc symrefs="yes"?>
+<!-- Use symbolic labels for references -->
+<?rfc sortrefs="yes"?>
+<!-- This sorts the references -->
+<?rfc iprnotified="no" ?>
+<!-- Change to "yes" if someone has disclosed IPR for the draft -->
+<?rfc compact="yes"?>
+<!-- This defines the specific filename and version number of your draft (and inserts the appropriate IETF boilerplate -->
+<rfc category="info" docName="draft-du-anima-an-intent-01" ipr="trust200902">
+  <front>
+    <title abbrev="Autonomic Network Intent">Autonomic Network Intent and
+    Format</title>
+
+    <author fullname="Zongpeng Du" initials="Z." surname="Du">
+      <organization>Huawei Technologies Co., Ltd</organization>
+
+      <address>
+        <postal>
+          <street>Q14, Huawei Campus, No.156 Beiqing Road</street>
+
+          <city>Hai-Dian District, Beijing, 100095</city>
+
+          <country>P.R. China</country>
+        </postal>
+
+        <email>duzongpeng@huawei.com</email>
+      </address>
+    </author>
+
+    <author fullname="Sheng Jiang" initials="S." surname="Jiang">
+      <organization>Huawei Technologies Co., Ltd</organization>
+
+      <address>
+        <postal>
+          <street>Q14, Huawei Campus, No.156 Beiqing Road</street>
+
+          <city>Hai-Dian District, Beijing, 100095</city>
+
+          <country>P.R. China</country>
+        </postal>
+
+        <email>jiangsheng@huawei.com</email>
+      </address>
+    </author>
+
+    <author fullname="Jeferson Campos Nobre" initials="J. " surname="Nobre">
+      <organization>Federal University of Rio Grande do Sul</organization>
+
+      <address>
+        <postal>
+          <street/>
+
+          <city>Porto Alegre</city>
+
+          <country>Brazil</country>
+        </postal>
+
+        <email>jcnobre@inf.ufrgs.br</email>
+      </address>
+    </author>
+
+    <author fullname="Laurent Ciavaglia" initials="L." surname="Ciavaglia">
+      <organization>Alcatel Lucent</organization>
+
+      <address>
+        <postal>
+          <street>Route de Villejust</street>
+
+          <city>Nozay 91620</city>
+
+          <country>France</country>
+        </postal>
+
+        <email>laurent.ciavaglia@alcatel-lucent.com</email>
+      </address>
+    </author>
+
+    <date day="" month="" year="2015"/>
+
+    <area>Operations and Management</area>
+
+    <workgroup>ANIMA WG</workgroup>
+
+    <keyword>Autonomic Networking, Intent</keyword>
+
+    <abstract>
+      <t>This document describes the concept and consideration of the
+      Autonomic Network Intent, and proposes a uniform format for the
+      Autonomic Network Intent.</t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section anchor="intro" title="Introduction">
+      <t>This document describes the concept and consideration of the
+      Autonomic Network Intent, which is used to operate the Autonomic Nodes
+      within Autonomic Networks. The background to Autonomic Network (AN) is
+      described in <xref target="RFC7575"/> and <xref target="RFC7576"/>. A
+      generic discovery and negotiation protocol (GDNP) is proposed by <xref
+      target="I-D.carpenter-anima-gdn-protocol"/>, which would be used in the
+      propagation of the Autonomic Network Intent.</t>
+
+      <t>The Autonomic Network Intent should be able to be unscrambled by all
+      Autonomic Nodes, although certain parts of contents may not be relevant
+      to a specific Autonomic Node. The Autonomic Network Intent gives
+      operational guidance for every Autonomic Node.</t>
+
+      <t>This document also proposes a generic format for Autonomic Network
+      Intent.</t>
+
+      <t>The interface to receive or configure the Autonomic Network Intent is
+      out of scope. The distribution mechanism of the Autonomic Network Intent
+      is introduced in [I-D.liu-anima-intent-distribution].</t>
+
+      <t>Note in draft: This version is preliminary. In particular, many
+      design details may be subject to change until the anima specifications
+      become agreed.</t>
+    </section>
+
+    <!-- intro -->
+
+    <section title="Requirements Language and Terminology">
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+      "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+      "OPTIONAL" in this document are to be interpreted as described in <xref
+      target="RFC2119"/> when they appear in ALL CAPS. When these words are
+      not in ALL CAPS (such as "should" or "Should"), they have their usual
+      English meanings, and are not to be interpreted as <xref
+      target="RFC2119"/> key words.</t>
+
+      <t><list style="hanging">
+          <t hangText="Autonomic Function:">A feature or function which
+          requires no configuration, and can derive all required information
+          either through self-knowledge, discovery or through Intent.</t>
+
+          <t hangText="Autonomic Node:">A node which employs exclusively
+          Autonomic Functions.</t>
+
+          <t hangText="Legacy Node:">A non-autonomic node, i.e., a node which
+          employs some non-autonomic functions.</t>
+
+          <t hangText="Autonomic Network:">A network containing exclusively
+          Autonomic Nodes. It may contain one or several Autonomic
+          Domains.</t>
+
+          <t hangText="Autonomic Service Agent:">An agent implemented on an
+          Autonomic Node which implements an Autonomic Function.</t>
+
+          <t hangText="Intent:">An abstract, high level policy used to operate
+          the network, quoted from <xref target="RFC7575"/>.</t>
+
+          <t hangText="Autonomic Network Intent:">Intent that is used to
+          intervene the running status of the Autonomic Network.</t>
+
+          <t hangText="Administrative Intent:">Intent that is used to manage
+          the network infrastructure.</t>
+
+          <t hangText="Service Intent:">Intent that is used to intervene the
+          network services running over the network infrastructure.</t>
+        </list></t>
+    </section>
+
+    <section anchor="intent"
+             title="Intervention of the Network Running by Autonomic Network Intent">
+      <t>The Autonomic Network is supposed to work with minimum intervention
+      from human operators. However, it is still needed to receive some form
+      of guidance/information/orders in order to meet specific
+      requirements.</t>
+
+      <t>Upon receiving the Autonomic Network Intent, the Autonomic Node
+      should be able to unscramble the meaning of the intent with no
+      ambiguity, and act accordingly.</t>
+
+      <t>Using this intent approach, the operator can manage the network as a
+      whole, and does not need to configure specific node(s) in the network
+      like what happens in the traditional NMS system. In other words, the
+      operator communicates with the Autonomic Network using an abstract or
+      high lever intent, and the configurations of the nodes take place
+      automatically. By replacing most of the NMS jobs, intent-based
+      management makes the network management work much easier than
+      before.</t>
+
+      <t>On the other sides, the intent-based and NMS-based management may
+      co-exist for a long time, because autonomic behavior will be defined
+      function by function. Similarly, at the beginning of defining the
+      Autonomic Network Intents, the intent-based method cannot be assumed to
+      cover every aspect of network management.</t>
+
+      <t/>
+
+      <section title="Use Cases for Autonomic Network Intent">
+        <t>An example of the intent can be found in <xref
+        target="I-D.jiang-anima-prefix-management"/>. Other examples include
+        what kind of IGP (such as OSPF) or what kind of transport layer
+        technology (such as MPLS) should be used for the autonomic domain.</t>
+
+        <t>After these configurations in the network level, detailed
+        configurations in every node are not needed; whereas, policy-based
+        method will need detailed configurations for every specific node.</t>
+
+        <t>An Intent should contains some common information that are needed
+        by every intent and some specific information that influence the
+        configuration of the nodes, and the detailed content and format of the
+        specific part should be defined under its specific application
+        environment by other documents, such as the prefix management intent
+        defined in <xref target="I-D.jiang-anima-prefix-management"/>.</t>
+
+        <t>{Editor Notes: as autonomic functions are defined one by one, the
+        intent should be developed at a per need basis.}</t>
+
+        <t>{Editor Notes: the intents introduced here look like not that
+        abstract, however, it does help to make the network more autonomic,
+        and reduce the configuration jobs. Maybe in future, when the autonomic
+        node becomes more intelligent, some of the intents defined will
+        disappear or be replaced.}</t>
+
+        <t/>
+      </section>
+
+      <section title="Administrative Intent and Service Intent">
+        <t>The Autonomic Networks are supposed to be self-managed. It includes
+        managing the network infrastructure, and also the network services
+        that are running over the network infrastructure. However, the network
+        services have different features against network administration, as
+        listed below. Hence, it may be better to organize them into separated
+        Administrative Intent and Service Intent.</t>
+
+        <t><list style="symbols">
+            <t>A Service Intent may have a smaller scope than the
+            Administrative Intent because only the nodes related to the
+            service need to know this intent. Although it may only affect a
+            few nodes, the Service Intent may also be propagated domain
+            wide.</t>
+
+            <t>A Service Intent may have a limited lifetime, while the
+            Administrative Intents are normally permanent although the content
+            of the Administrative Intent may be updated from time to time.</t>
+
+            <t>There maybe are many Service Intents in the autonomic domain,
+            while only one Administrative Intent for a giving Autonomic
+            Service Agent.</t>
+          </list></t>
+
+        <t>{Editor notes: one possibility is to treat the Service Intent as a
+        normal Intent for a certain Autonomic Service Agent, such as a
+        Autonomic Service Provision Agent.}</t>
+      </section>
+    </section>
+
+    <section anchor="prefixManageIntent"
+             title="Uniform Format of the Autonomic Network Intent">
+      <t>{Editor Notes: It is still remaining an open issue for the way that
+      intent may be organized. Should the intent be a single one in a given AN
+      domain with a hierarchical version, or multiple intents, each of which
+      targets different Autonomic Service Agent? For now, the below text takes
+      the later approach.}</t>
+
+      <t>This section proposes a uniform intent format. It uses the tag-based
+      format.</t>
+
+      <t><list style="hanging">
+          <t hangText="Autonomic intent:">The root tag for the Autonomic
+          Network Intent.</t>
+
+          <t hangText="Intent type:">It indicates the intent type, which is
+          associated with a specific Autonomic Service Agent.</t>
+
+          <t hangText="Autonomic domain:">It indicates the domain of the
+          Autonomic Network. It is also the scope of the Autonomic Network
+          Intent.</t>
+
+          <t hangText="Intent version:">It indicates the version of the
+          Autonomic Network Intent. This is an important feature for
+          synchronization.</t>
+
+          <t hangText="Model version:">The version of the model used to define
+          the intent.</t>
+
+          <t hangText="Name:">The name of the intent which describes the
+          intent for human operators.</t>
+
+          <t hangText="Signature:">The signature is used as a security
+          mechanism to provide authentication, integrity, and
+          non-repudiation.</t>
+
+          <t hangText="Timestamp:">The timestamp of the creation of the intent
+          using the format supported by the IETF [TBC].</t>
+
+          <t hangText="Lifetime:">The lifetime in which the intent may be
+          observed. A special case of the lifetime is the definition of
+          permanent intents.</t>
+
+          <t hangText="Content:">It contains the main information of the
+          intent. It may include objects, policies, goals and configuration
+          data. The detailed contents and formats should be defined under
+          their specific situations by documents that specifies the Autonomic
+          Service Agent. Within the content, there may be sub_intents.</t>
+        </list></t>
+
+      <t/>
+
+      <t>{Editor Notes: JSON is one of the term candidates for the Autonomic
+      Network Intent format.}</t>
+
+      <t/>
+
+      <t/>
+    </section>
+
+    <section anchor="security" title="Security Considerations">
+      <t>Relevant security issues are discussed in <xref
+      target="I-D.carpenter-anima-gdn-protocol"/>. The Autonomic Network
+      Intent requires strong security environment from the start, because it
+      would be great risk if the Autonomic Network Intent had been maliciously
+      tampered. The Autonomic Intent should employ a signature scheme to
+      provide authentication, integrity, and non-repudiation.</t>
+    </section>
+
+    <!-- security -->
+
+    <section anchor="iana" title="IANA Considerations">
+      <t>This document defines one new format. The IANA is requested to
+      establish a new assigned list for it.</t>
+
+      <t/>
+    </section>
+
+    <!-- iana -->
+
+    <section anchor="ack" title="Acknowledgements">
+      <t>Valuable comments were received from Bing Liu and Brian
+      Carpenter.</t>
+
+      <t>This document was produced using the xml2rfc tool <xref
+      target="RFC2629"/>.</t>
+    </section>
+
+    <!-- ack -->
+
+    <section anchor="changes" title="Change log [RFC Editor: Please remove]">
+      <t>draft-du-anima-an-intent-00: original version, 2015-06-11.</t>
+
+      <t>draft-du-anima-an-intent-01: add intent use case section, add some
+      elements for the format section, and coauthor Jeferson Campos Nobre and
+      Laurent Ciavaglia, 2015-07-06.</t>
+    </section>
+
+    <!-- changes -->
+  </middle>
+
+  <back>
+    <references title="References">
+      <?rfc include='reference.RFC.2119'?>
+
+      <?rfc include='reference.RFC.2629'?>
+
+      <?rfc include='reference.RFC.7575'?>
+
+      <?rfc include='reference.RFC.7576'?>
+
+      <?rfc include='reference.I-D.jiang-anima-prefix-management'?>
+
+      <?rfc include='reference.I-D.carpenter-anima-gdn-protocol'?>
+
+      <?rfc include='reference.I-D.behringer-anima-autonomic-control-plane'?>
+    </references>
+  </back>
+</rfc>
