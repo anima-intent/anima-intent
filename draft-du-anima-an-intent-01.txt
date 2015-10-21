@@ -5,15 +5,15 @@
 ANIMA WG                                                           Z. Du
 Internet-Draft                                                  S. Jiang
 Intended status: Informational              Huawei Technologies Co., Ltd
-Expires: January 7, 2016                                        J. Nobre
+Expires: April 20, 2016                                         J. Nobre
                                  Federal University of Rio Grande do Sul
                                                             L. Ciavaglia
                                                           Alcatel Lucent
-                                                            July 6, 2015
+                                                        October 18, 2015
 
 
                   Autonomic Network Intent and Format
-                      draft-du-anima-an-intent-01
+                      draft-du-anima-an-intent-02
 
 Abstract
 
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 7, 2016.
+   This Internet-Draft will expire on April 20, 2016.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Du, et al.               Expires January 7, 2016                [Page 1]
+Du, et al.               Expires April 20, 2016                 [Page 1]
 
-Internet-Draft          Autonomic Network Intent               July 2015
+Internet-Draft          Autonomic Network Intent            October 2015
 
 
    the Trust Legal Provisions and are provided without warranty as
@@ -67,25 +67,31 @@ Table of Contents
    2.  Requirements Language and Terminology . . . . . . . . . . . .   3
    3.  Intervention of the Network Running by Autonomic Network
        Intent  . . . . . . . . . . . . . . . . . . . . . . . . . . .   3
-     3.1.  Use Cases for Autonomic Network Intent  . . . . . . . . .   4
-     3.2.  Administrative Intent and Service Intent  . . . . . . . .   4
-   4.  Uniform Format of the Autonomic Network Intent  . . . . . . .   5
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
-   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
-   8.  Change log [RFC Editor: Please remove]  . . . . . . . . . . .   6
-   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
+     3.1.  Concept of Autonomic Network Intent . . . . . . . . . . .   4
+     3.2.  Administrative Intent and Service Intent  . . . . . . . .   5
+     3.3.  Use Cases for Autonomic Network Intent  . . . . . . . . .   6
+       3.3.1.  High-Level Policy Intent  . . . . . . . . . . . . . .   6
+       3.3.2.  Network-Level Parameter Intent  . . . . . . . . . . .   7
+     3.4.  Distribution of Autonomic Network Intent  . . . . . . . .   8
+     3.5.  Interpretation of Autonomic Network Intent  . . . . . . .   8
+     3.6.  Management of Autonomic Network Intent  . . . . . . . . .   8
+   4.  Uniform Format of the Autonomic Network Intent  . . . . . . .   9
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  10
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  10
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  10
+   8.  Change log [RFC Editor: Please remove]  . . . . . . . . . . .  10
+   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  11
 
 1.  Introduction
 
    This document describes the concept and consideration of the
    Autonomic Network Intent, which is used to operate the Autonomic
    Nodes within Autonomic Networks.  The background to Autonomic Network
-   (AN) is described in [RFC7575] and [RFC7576].  A generic discovery
-   and negotiation protocol (GDNP) is proposed by
-   [I-D.carpenter-anima-gdn-protocol], which would be used in the
-   propagation of the Autonomic Network Intent.
+   (AN) is described in [RFC7575] and [RFC7576].  A generic autonomic
+   signaling protocol (GRASP) is proposed by [I-D.ietf-anima-grasp],
+   which would be used in the propagation of the Autonomic Network
+   Intent.
 
    The Autonomic Network Intent should be able to be unscrambled by all
    Autonomic Nodes, although certain parts of contents may not be
@@ -99,20 +105,18 @@ Table of Contents
    out of scope.  The distribution mechanism of the Autonomic Network
    Intent is introduced in [I-D.liu-anima-intent-distribution].
 
+
+
+
+
+Du, et al.               Expires April 20, 2016                 [Page 2]
+
+Internet-Draft          Autonomic Network Intent            October 2015
+
+
    Note in draft: This version is preliminary.  In particular, many
    design details may be subject to change until the anima
    specifications become agreed.
-
-
-
-
-
-
-
-Du, et al.               Expires January 7, 2016                [Page 2]
-
-Internet-Draft          Autonomic Network Intent               July 2015
-
 
 2.  Requirements Language and Terminology
 
@@ -140,7 +144,7 @@ Internet-Draft          Autonomic Network Intent               July 2015
    Autonomic Service Agent:  An agent implemented on an Autonomic Node
       which implements an Autonomic Function.
 
-   Intent:  An abstract, high level policy used to operate the network,
+   Intent:  An abstract, high-level policy used to operate the network,
       quoted from [RFC7575].
 
    Autonomic Network Intent:  Intent that is used to intervene the
@@ -159,16 +163,16 @@ Internet-Draft          Autonomic Network Intent               July 2015
    form of guidance/information/orders in order to meet specific
    requirements.
 
+
+
+Du, et al.               Expires April 20, 2016                 [Page 3]
+
+Internet-Draft          Autonomic Network Intent            October 2015
+
+
    Upon receiving the Autonomic Network Intent, the Autonomic Node
    should be able to unscramble the meaning of the intent with no
    ambiguity, and act accordingly.
-
-
-
-Du, et al.               Expires January 7, 2016                [Page 3]
-
-Internet-Draft          Autonomic Network Intent               July 2015
-
 
    Using this intent approach, the operator can manage the network as a
    whole, and does not need to configure specific node(s) in the network
@@ -184,7 +188,101 @@ Internet-Draft          Autonomic Network Intent               July 2015
    Autonomic Network Intents, the intent-based method cannot be assumed
    to cover every aspect of network management.
 
-3.1.  Use Cases for Autonomic Network Intent
+3.1.  Concept of Autonomic Network Intent
+
+   The definition of Intent can be found in
+   [I-D.behringer-anima-reference-model], which is described as an
+   abstract, declarative, high-level policy used to operate an autonomic
+   domain, such as an enterprise network.  Based on this definition,
+   this section further discusses the concept of Autonomic Network
+   Intent.
+
+   Autonomic Network Intent consists of different parts, and should not
+   be considered as a monolithic block.  Different parts of Intent will
+   be "interpreted" by different entities in autonomic networks, and the
+   "level" of understanding of the intent will impact how the intent
+   will be presented to this entity.  So there should be "intermediate"
+   mechanisms/functions that cater for the intent translation continuum
+   across the heterogeneity (in policy capabilities) of the network
+   entities.  Also, intents will possibly overlap and this overlapping
+   should be managed (e.g., avoid conflicts, resolve applicable policies
+   in context).
+
+   The description of "abstract" in the definition is relative.
+   Different users (e.g., the network administrator, end-users) of the
+   network see different levels of network details, so they are in
+   different abstraction levels.  Meanwhile, different intents or
+   different parts of intent may require different levels of
+   abstraction.
+
+   The more abstract an intent is, the more intelligent the devices are
+   required.  In an extreme example, the network operator just needs to
+   have only one intent for the network: "the network should work well
+
+
+
+Du, et al.               Expires April 20, 2016                 [Page 4]
+
+Internet-Draft          Autonomic Network Intent            October 2015
+
+
+   for everything".  However, this assumption is not likely to be
+   realized in recent years, and this intent requires no or little
+   standardization jobs.  Besides, if an intent is too abstract,
+   different solutions can emerge from different vendors, and it is hard
+   to co-exist for the devices from different vendors.
+
+   This document will talk about the intents which need to be
+   communicated among devices, and have more detailed requirements.
+   Some intents may have a higher abstraction level (e.g. some high-
+   level policies), and some may have a lower abstraction level (e.g.
+   some network-level parameters).  Meanwhile, due to the target of
+   reducing human Interventions for the Autonomic Network, detailed
+   configurations should be avoided as much as possible.
+
+   {Editor notes: the most important questions here are as follows.  Are
+   there any configuration parameters of an anima network outside
+   intents?  Are there different kinds of intents?  Need we define a
+   "hierarchy" for intents?}
+
+3.2.  Administrative Intent and Service Intent
+
+   The Autonomic Networks are supposed to be self-managed.  It includes
+   managing the network infrastructure, and also the network services
+   that are running over the network infrastructure.  However, the
+   network services have different features against network
+   administration, as listed below.  Hence, it may be better to organize
+   them into separated Administrative Intent and Service Intent.
+
+   o  A Service Intent may have a smaller scope than the Administrative
+      Intent because only the nodes related to the service need to know
+      this intent.  Although it may only affect a few nodes, the Service
+      Intent may also be propagated domain wide.
+
+   o  A Service Intent may have a limited lifetime, while the
+      Administrative Intents are normally permanent although the content
+      of the Administrative Intent may be updated from time to time.
+
+   o  There maybe are many Service Intents in the autonomic domain,
+      while only one Administrative Intent for a giving Autonomic
+      Service Agent.
+
+   {Editor notes: one possibility is to treat the Service Intent as a
+   normal Intent for a certain Autonomic Service Agent, such as a
+   Autonomic Service Provision Agent.}
+
+
+
+
+
+
+
+Du, et al.               Expires April 20, 2016                 [Page 5]
+
+Internet-Draft          Autonomic Network Intent            October 2015
+
+
+3.3.  Use Cases for Autonomic Network Intent
 
    An example of the intent can be found in
    [I-D.jiang-anima-prefix-management].  Other examples include what
@@ -211,40 +309,146 @@ Internet-Draft          Autonomic Network Intent               July 2015
    autonomic node becomes more intelligent, some of the intents defined
    will disappear or be replaced.}
 
-3.2.  Administrative Intent and Service Intent
+3.3.1.  High-Level Policy Intent
 
-   The Autonomic Networks are supposed to be self-managed.  It includes
-   managing the network infrastructure, and also the network services
-   that are running over the network infrastructure.  However, the
-   network services have different features against network
+   For clarifying the concept of the intent in Autonomic Network, this
+   section introduces some autonomic intent examples about the high-
+   level polices.  Multiple Autonomic Function Agents may be involved in
+   the implementation of these intents.
+
+   These abstract policies need to be interpreted by a policy continuum
+   to low level commands that the device can understand.  The detailed
+   realization of the tranlation for these high-level polices is out of
+   scope of this document.
+
+   Usecase one:
+
+   Autonomic Network of Operator A is composed of Autonomic Function
+   Agents such as load balancing (LB_AFA) and energy saving (ES_AFA).
+   Operator A wants to limit the proportion of links loaded over a
+   certain threshold and thus defines an Intent to activate load
+   balancing if the load is superior to 0.6 on more than 30% of the
+   links.
 
 
 
 
-Du, et al.               Expires January 7, 2016                [Page 4]
+Du, et al.               Expires April 20, 2016                 [Page 6]
 
-Internet-Draft          Autonomic Network Intent               July 2015
+Internet-Draft          Autonomic Network Intent            October 2015
 
 
-   administration, as listed below.  Hence, it may be better to organize
-   them into separated Administrative Intent and Service Intent.
+   Meanwhile, operator A wants different load balancing policies per
+   (technology, administrative, topology) domain.  Let's consider a
+   metropolitan network domain and a core network domain, or different
+   LB policy for border routers than interior routers.  For the
+   metropolitan network domain, Operator A defines an Intent to minimize
+   the link load variance.  For the core network domain, Operator A
+   applies the previously defined intent (activate load balancing if the
+   load is superior to 0.6 on more than 30% of the links).
 
-   o  A Service Intent may have a smaller scope than the Administrative
-      Intent because only the nodes related to the service need to know
-      this intent.  Although it may only affect a few nodes, the Service
-      Intent may also be propagated domain wide.
+   The intents will be distributed to the right network domain, and take
+   effect after being interpreted and coordinated, and it is easy to
+   change them without the need to configure every device manually.
 
-   o  A Service Intent may have a limited lifetime, while the
-      Administrative Intents are normally permanent although the content
-      of the Administrative Intent may be updated from time to time.
+   Usecase two:
 
-   o  There maybe are many Service Intents in the autonomic domain,
-      while only one Administrative Intent for a giving Autonomic
-      Service Agent.
+   This example is about "arranging VM guest distribution".  The
+   autonomic network is supposed to be able to monitor the CPU/power
+   utilization on each host machine, and control the status of each host
+   machine (e.g. turn on/off).  The operator may have an intent "there
+   should be enough hosts to keep CPU utilization less than 70%", and
+   also another one "there are few enough hosts powered so that
+   electricity isn't wasted".
 
-   {Editor notes: one possibility is to treat the Service Intent as a
-   normal Intent for a certain Autonomic Service Agent, such as a
-   Autonomic Service Provision Agent.}
+   {Editor Notes: Besides these ones, we are quite open for other use
+   cases here.}
+
+3.3.2.  Network-Level Parameter Intent
+
+   Due to the system limitations and complexity reasons, some intents
+   may just be network-level parameters configured by the network
+   operator for a specific autonomic function.  These configuration
+   parameters can be distributed in the autonomic domain to influence
+   the detail configurations on each autonomic node.
+
+   Most of these parameters are for establishing network infrastructure.
+   They are likely only needed to be configured once, and rarely
+   changed.  Meanwhile, these parameters do not need coordination with
+   others parameters most of the times.  Some examples are as follows.
+
+   Usecase three:
+
+   When bootstrapping, the new device needs to know some basic
+   parameters about the autonomic domain to complete the process.  To
+   reduce the complexity of bootstrapping, they are perhaps not need to
+   be encrypted.  They can be treated as "bootstrapping intent" as a
+   special kind of intent.
+
+   Usecase four:
+
+
+
+Du, et al.               Expires April 20, 2016                 [Page 7]
+
+Internet-Draft          Autonomic Network Intent            October 2015
+
+
+   Assuming we need an autonomic network to run and connect to Internet,
+   an IP prefix is needed for the whole autonomic domain in the data
+   plane.  In this case, we need devices in the autonomic domain can
+   configure themselves after the human operator has notified the IP
+   prefix for this autonomic network.  (Configuring every device's IP
+   address manually is not considered a good way in autonomic network,
+   and is not recommended here.)
+
+   Usecase five:
+
+   Configuring the routing protocol in the autonomic network directly by
+   the operator, assuming it can be ISIS or OSPF.
+
+   Usecase six:
+
+   In the prefix management draft [I-D.jiang-anima-prefix-management],
+   it is suggested that the prefix lengths for the CSG, ASG, RSG
+   (different roles in IPRAN) should be assigned as an "intent".
+
+   {Editor Notes: Besides these ones, we are quite open for other use
+   cases here.}
+
+3.4.  Distribution of Autonomic Network Intent
+
+   TBD.
+
+   {Editor Notes: talk about the questions as follows.  Who are the
+   sources and recipients of the intent? }
+
+3.5.  Interpretation of Autonomic Network Intent
+
+   TBD.
+
+   {Editor Notes: talk about the questions as follows.  How the AFAs
+   receive, understand and react to an intent? }
+
+3.6.  Management of Autonomic Network Intent
+
+   TBD.
+
+   {Editor Notes: talk about the questions as follows.  When/on which
+   triggers are intents generated, updated?  How the domain(s) are
+   defined and recognized (if I am an AFA, how do I know i am part of
+   domain x, y or z...?). }
+
+
+
+
+
+
+
+Du, et al.               Expires April 20, 2016                 [Page 8]
+
+Internet-Draft          Autonomic Network Intent            October 2015
+
 
 4.  Uniform Format of the Autonomic Network Intent
 
@@ -273,15 +477,6 @@ Internet-Draft          Autonomic Network Intent               July 2015
    Name:  The name of the intent which describes the intent for human
       operators.
 
-
-
-
-
-Du, et al.               Expires January 7, 2016                [Page 5]
-
-Internet-Draft          Autonomic Network Intent               July 2015
-
-
    Signature:  The signature is used as a security mechanism to provide
       authentication, integrity, and non-repudiation.
 
@@ -301,14 +496,24 @@ Internet-Draft          Autonomic Network Intent               July 2015
    {Editor Notes: JSON is one of the term candidates for the Autonomic
    Network Intent format.}
 
+
+
+
+
+
+Du, et al.               Expires April 20, 2016                 [Page 9]
+
+Internet-Draft          Autonomic Network Intent            October 2015
+
+
 5.  Security Considerations
 
-   Relevant security issues are discussed in
-   [I-D.carpenter-anima-gdn-protocol].  The Autonomic Network Intent
-   requires strong security environment from the start, because it would
-   be great risk if the Autonomic Network Intent had been maliciously
-   tampered.  The Autonomic Intent should employ a signature scheme to
-   provide authentication, integrity, and non-repudiation.
+   Relevant security issues are discussed in [I-D.ietf-anima-grasp].
+   The Autonomic Network Intent requires strong security environment
+   from the start, because it would be great risk if the Autonomic
+   Network Intent had been maliciously tampered.  The Autonomic Intent
+   should employ a signature scheme to provide authentication,
+   integrity, and non-repudiation.
 
 6.  IANA Considerations
 
@@ -318,6 +523,7 @@ Internet-Draft          Autonomic Network Intent               July 2015
 7.  Acknowledgements
 
    Valuable comments were received from Bing Liu and Brian Carpenter.
+   Talking in the mailist is very helpful.
 
    This document was produced using the xml2rfc tool [RFC2629].
 
@@ -329,46 +535,62 @@ Internet-Draft          Autonomic Network Intent               July 2015
    elements for the format section, and coauthor Jeferson Campos Nobre
    and Laurent Ciavaglia, 2015-07-06.
 
-
-
-
-
-Du, et al.               Expires January 7, 2016                [Page 6]
-
-Internet-Draft          Autonomic Network Intent               July 2015
-
+   draft-du-anima-an-intent-02: add the intent concept section, and some
+   other sections, 2015-10-14.
 
 9.  References
 
-   [I-D.behringer-anima-autonomic-control-plane]
-              Behringer, M., Bjarnason, S., BL, B., and T. Eckert, "An
-              Autonomic Control Plane", draft-behringer-anima-autonomic-
-              control-plane-03 (work in progress), June 2015.
+   [I-D.behringer-anima-reference-model]
+              Behringer, M., Carpenter, B., Eckert, T., Ciavaglia, L.,
+              Liu, B., Jeff, J., and J. Strassner, "A Reference Model
+              for Autonomic Networking", draft-behringer-anima-
+              reference-model-03 (work in progress), June 2015.
 
-   [I-D.carpenter-anima-gdn-protocol]
-              Carpenter, B. and B. Liu, "A Generic Discovery and
-              Negotiation Protocol for Autonomic Networking", draft-
-              carpenter-anima-gdn-protocol-04 (work in progress), June
-              2015.
+   [I-D.ietf-anima-grasp]
+              Bormann, C., Carpenter, B., and B. Liu, "A Generic
+              Autonomic Signaling Protocol (GRASP)", draft-ietf-anima-
+              grasp-01 (work in progress), October 2015.
+
+
+
+
+
+
+
+Du, et al.               Expires April 20, 2016                [Page 10]
+
+Internet-Draft          Autonomic Network Intent            October 2015
+
 
    [I-D.jiang-anima-prefix-management]
               Jiang, S., Du, Z., Carpenter, B., and Q. Qiong, "Autonomic
               Prefix Management in Large-scale Networks", draft-jiang-
               anima-prefix-management-01 (work in progress), May 2015.
 
+   [I-D.liu-anima-intent-distribution]
+              Liu, B. and S. Jiang, "Intent Distribution for Autonomic
+              Networking", draft-liu-anima-intent-distribution-00 (work
+              in progress), June 2015.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119, March 1997.
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <http://www.rfc-editor.org/info/rfc2119>.
 
    [RFC2629]  Rose, M., "Writing I-Ds and RFCs using XML", RFC 2629,
-              June 1999.
+              DOI 10.17487/RFC2629, June 1999,
+              <http://www.rfc-editor.org/info/rfc2629>.
 
    [RFC7575]  Behringer, M., Pritikin, M., Bjarnason, S., Clemm, A.,
               Carpenter, B., Jiang, S., and L. Ciavaglia, "Autonomic
-              Networking: Definitions and Design Goals", RFC 7575, June
-              2015.
+              Networking: Definitions and Design Goals", RFC 7575,
+              DOI 10.17487/RFC7575, June 2015,
+              <http://www.rfc-editor.org/info/rfc7575>.
 
    [RFC7576]  Jiang, S., Carpenter, B., and M. Behringer, "General Gap
-              Analysis for Autonomic Networking", RFC 7576, June 2015.
+              Analysis for Autonomic Networking", RFC 7576,
+              DOI 10.17487/RFC7576, June 2015,
+              <http://www.rfc-editor.org/info/rfc7576>.
 
 Authors' Addresses
 
@@ -381,19 +603,6 @@ Authors' Addresses
    Email: duzongpeng@huawei.com
 
 
-
-
-
-
-
-
-
-
-Du, et al.               Expires January 7, 2016                [Page 7]
-
-Internet-Draft          Autonomic Network Intent               July 2015
-
-
    Sheng Jiang
    Huawei Technologies Co., Ltd
    Q14, Huawei Campus, No.156 Beiqing Road
@@ -401,6 +610,12 @@ Internet-Draft          Autonomic Network Intent               July 2015
    P.R. China
 
    Email: jiangsheng@huawei.com
+
+
+
+Du, et al.               Expires April 20, 2016                [Page 11]
+
+Internet-Draft          Autonomic Network Intent            October 2015
 
 
    Jeferson Campos Nobre
@@ -445,4 +660,13 @@ Internet-Draft          Autonomic Network Intent               July 2015
 
 
 
-Du, et al.               Expires January 7, 2016                [Page 8]
+
+
+
+
+
+
+
+
+
+Du, et al.               Expires April 20, 2016                [Page 12]
